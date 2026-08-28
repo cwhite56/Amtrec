@@ -1,6 +1,5 @@
 package com.cwhite56.amtrec.domain.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;

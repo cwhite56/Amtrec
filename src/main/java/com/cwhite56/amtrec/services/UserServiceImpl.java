@@ -24,7 +24,7 @@ import com.cwhite56.amtrec.domain.dtos.ClassStatsResponse;
 import com.cwhite56.amtrec.domain.dtos.NewUserRequest;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -122,7 +122,10 @@ public class UserServiceImpl implements UserService{
             .map(spellListMapper::mapTo)
             .toList();
     }
-
+    
+    /**
+     * Method to query database for list of inclusion rates and list of averages indexed by spell 
+     */
     @Override
     public ClassStatsResponse getGlobalStats(String casterClass, Kingdom kingdom, Integer spellsPurchased) {
 

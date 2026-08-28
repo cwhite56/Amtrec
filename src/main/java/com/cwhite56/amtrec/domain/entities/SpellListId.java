@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Composite key of spell list
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

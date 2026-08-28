@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Response that contains list of inclusion rate and list of average index by spell
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

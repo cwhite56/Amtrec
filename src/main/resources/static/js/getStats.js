@@ -1,3 +1,6 @@
+/**
+ * Function that sends ClassStatsRequest to backend and updates stat values on the page based on the response
+ */
 function submitStatRequest() {
             const form = document.querySelector('.form');
 

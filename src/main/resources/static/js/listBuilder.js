@@ -1,3 +1,8 @@
+            /**
+             * Increases purchased amount of a spell
+             * @param {*} spell 
+             * @returns error code if applicable
+             */
             function countUp(spell) {
 
                 if(archtypeConflict(spell)) return -1;
@@ -17,6 +22,11 @@
                 purchased.value++;
             }
 
+            /**
+             * Decrements purchased amount of a spell
+             * @param {*} spell 
+             * @returns error code if applicable
+             */
             function countDown(spell) {
 
                 const inputField = document.getElementById(spell);
@@ -40,6 +50,12 @@
                 if(isEmptyList()) enableLTP();
             }
 
+            /**
+             * Helper function that spends points upon countUp
+             * @param {*} spell 
+             * @param {*} multipliers spells value / cost mods based on current archtype
+             * @returns error code if applicable
+             */
             function spendPoints(spell, multipliers) {
                 const levelPoints = document.querySelectorAll('[id^="level"]');
 
@@ -51,7 +67,7 @@
                 const spellLevel = parseInt(inputField.dataset.level);
 
                 for(let i = 0; i < 6; i++) {
-
+                    // May only draw points from level bucket >= spell's level
                     if(i + 1 < spellLevel) continue;
 
                     const startingVal = levelPoints[i].value;
@@ -74,6 +90,11 @@
                 return 0;
             }
 
+            /**
+             * Helper function that refunds points upon countDown
+             * @param {*} spell 
+             * @param {*} multipliers spells value / cost mods based on current archtype
+             */
             function refundPoints(spell, multipliers) {
                 const levelPoints = document.querySelectorAll('[id^="level"]');
 
@@ -81,8 +102,10 @@
 
                 let cost = parseInt(inputField.dataset.cost) * multipliers.cost;
 
+                // Iterate from high to low level buckets to refund points in descending order
                 for (let i = 5; i >= 0; i--) {
 
+                    // Points remaining in i bucket
                     let remainingPoints = parseInt(refundablePointsByLevel(i + 1, spell));
 
                     remainingPoints -= levelPoints[i].value;
@@ -98,14 +121,22 @@
                 }
             }
 
+            /**
+             * Helper function that calculates how many points are able to refund to rank bucket
+             * @param {*} rank the level of the bucket
+             * @param {*} spell checked to prevent counting the points allocated for the spell being refunded
+             * @returns the number of points avaiable to be refunded in rank bucket
+             */
             function refundablePointsByLevel(rank, spell) {
 
+                // Iterate through all purchased spells in rank bucket
                 const spellsAtLevel = document.querySelectorAll(`[data-level="${rank}"]`);
                 const inputField = document.getElementById(spell);
 
                 let count = 0;
                 let max = 5;
 
+                // Bucket 6 gets 1 point larger while Look The Part active
                 if(rank == 6 && isLTP()) max = 6;
 
                 for(const spells of spellsAtLevel) {
@@ -114,6 +145,7 @@
 
                     let quantityPurchased = spells.value / multipliers.value;
 
+                    // Prevent count of refunded spell's points
                     if(inputField.id == spells.id) quantityPurchased--;
 
                     count += quantityPurchased * ( parseInt(spells.dataset.cost) * multipliers.cost);
@@ -176,9 +208,8 @@
 
                 const userField = document.getElementById('user');
                 const user = userField.value;
-                console.log(`user="${user}" title="${title}"`);
 
-                fetch(`/api/v1/users/${encodeURIComponent(user)}/spell-lists/${encodeURIComponent(title)}`,{
+                fetch(`/api/v1/users/${user}/spell-lists/${title}`,{
                     method: 'DELETE'
                 }).then(res => {
 
@@ -188,7 +219,11 @@
                     window.location.href = `/users/${user}/spell-lists/spellbook`;
                 });
             }
-
+            /**
+             * Function that updates the spell level with the (ex) tag or removes it
+             * @param {*} exNum which experienced tag is being modifed
+             * @param {*} isEx boolean to determine action
+             */
             function exSpell(exNum, isEx) {
                 
                 let spell;
@@ -216,6 +251,11 @@
                 }
             }
 
+            /**
+             * Function that returns whether a spell being countUp'd violates the restriction of the active archtype
+             * @param {*} spell 
+             * @returns boolean
+             */
             function archtypeConflict(spell) {
                 const getArchtypes = document.querySelectorAll('[id^="AT"]');
                 const spellInput = document.getElementById(spell);
@@ -264,6 +304,11 @@
                 return false;
             }
 
+            /**
+             * Function that returns the cost and value multipliers of a spell
+             * @param {*} spell 
+             * @returns an object containing the cost and value multipliers
+             */
             function getArchtypeMultipliers(spell) {
                 const multipliers = {
                     value: 1,
@@ -336,7 +381,7 @@
             }
 
             
-        
+            // Adds form submission to save button
             const form = document.querySelector('.form');
 
             form.addEventListener('submit', event => {
@@ -388,6 +433,7 @@
                 });
             });
 
+            // Adds the limit and cost of each spell to their requsite cells
             document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll('.spell-row').forEach(function (row) {
                     var input = row.querySelector('.spell-value');
@@ -405,6 +451,7 @@
                 });
             });
 
+            // allows for persistence of experience drop bar disable
             const sel1 = document.getElementById('exp1');
 
             if(sel1.value != '') sel1.disabled = true;

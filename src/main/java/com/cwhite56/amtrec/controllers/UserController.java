@@ -20,6 +20,9 @@ import com.cwhite56.amtrec.services.UserService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controller that allows interface with users and their saved spell lists
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {

@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Request sent to backend to retrieve spell list stats
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

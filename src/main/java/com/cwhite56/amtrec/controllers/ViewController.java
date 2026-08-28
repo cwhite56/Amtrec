@@ -14,9 +14,10 @@ import com.cwhite56.amtrec.domain.dtos.SpellListDto;
 import com.cwhite56.amtrec.services.UserService;
 
 
-
+/**
+ * Controller for navigating the web page via Thymeleaf templates
+ */
 @Controller
-
 public class ViewController {
 
     private final UserService userService;
@@ -45,6 +46,12 @@ public class ViewController {
         return "user-dashboard";
     }
 
+    /**
+     * View of all of a user's spell lists
+     * @param username
+     * @param model to pass username through
+     * @return view
+     */
     @GetMapping("users/{id}/spell-lists/spellbook")
     public String userSpellLists(@PathVariable("id") String username, Model model) {
         

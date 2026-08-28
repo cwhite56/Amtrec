@@ -10,6 +10,9 @@ import com.cwhite56.amtrec.domain.dtos.ClassStatsRequest;
 import com.cwhite56.amtrec.domain.dtos.ClassStatsResponse;
 import com.cwhite56.amtrec.services.UserService;
 
+/**
+ * Controller for interacting with the database to find stat breakdown of saved spell lists
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class StatsController {
@@ -19,7 +22,11 @@ public class StatsController {
     public StatsController(UserService userService) {
         this.userService = userService;
     }
-
+    /**
+     * Endpoint that returns two List<Double> of the % incluision and average of each spell of a caster class by sorted by index
+     * @param request specifies the kingdom, x less than % inclusion, and caster class to be queried
+     * @return ClassStatsResponse containing the two List<DOuble>
+     */
     @PostMapping("/spell-lists/global-stats")
     public ResponseEntity<ClassStatsResponse> getGlobalStats(@RequestBody ClassStatsRequest request) {
 
