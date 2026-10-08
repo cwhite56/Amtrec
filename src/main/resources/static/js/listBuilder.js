@@ -389,6 +389,9 @@
 
                 const data = Object.fromEntries(new FormData(form));
 
+                const titleInput = document.getElementById('title');
+                data.title = titleInput.value;
+
                 const spellInputs = document.querySelectorAll('.spell-value');
                 data.spentPoints = Array.from(spellInputs).map(input => parseInt(input.value) || 0);
 
@@ -413,6 +416,7 @@
                 data.LTP = isLTP.checked;
 
 
+
                 fetch(`/api/v1/users/${username}/spell-lists`, {
                     method: 'POST',
                     headers: {
@@ -421,7 +425,6 @@
                     body: JSON.stringify(data)
 
                 }).then(res =>  {
-
                     if(!res.ok) {
 
                         throw new Error('Error: could not save spell list');
